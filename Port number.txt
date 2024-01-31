@@ -1,0 +1,7 @@
+======= To change the default port number, which is 8080 =======
+
+Within Project -> main -> resources -> application.properties, write this: 
+	server.PORT=8081			(Where 8081 can be any choosen port number)
+
+Then restart application
+

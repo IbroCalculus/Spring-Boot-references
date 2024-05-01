@@ -1,0 +1,19 @@
+================ STARTING A NEW PROJECT ==============
+Go to https://start.spring.io/ to create the project's skeleton
+
+Project -> Maven
+Language -> Java
+Spring Boot -> 3.2.2
+
+Project Metadata (Do all as needed, I basically change Group: com.ibsu... & Artifact/Name is the project id/name)
+Packaging -> Jar
+Java -> 21
+
+Add the spring web dependency
+
+Generate and open in InteliJ IDE
+
+=================== STARTING THE SERVER ==================
+http://localhost:8080  (OR Change the port if not available via Port number.txt)
+NB: This will return a Whitelabel Error Page for now since no API endpoint implemented yet
+    CHECK: API.txt

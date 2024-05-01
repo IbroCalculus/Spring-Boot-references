@@ -1,0 +1,59 @@
+===== CREATE A CONTROLLER CLASS (ie Student Controller =====
+
+// This class will have all the resource for the API
+@RestController                    // Add this annotation
+public class StudentController {
+
+    // ============= GET REQUEST ================
+    // 1 - http://localhost:8080/
+    @GetMapping("/")
+    public String hello(){
+        return "Hello from this endpoint";
+    }
+
+    //	2 - http://localhost:8080/list
+    @GetMapping("/list")
+    public List<String> getList(){
+        return List.of("One","Two","Three");
+    }
+
+    //	3 - http://localhost:8080/maps
+    @GetMapping("/maps")
+    public HashMap<String, String> getMap(){
+
+        HashMap<String, String> resultMap = new HashMap<>();
+        resultMap.put("key1", "value1");
+        resultMap.put("key2", "value2");
+        resultMap.put("key3", "value3");
+
+        return resultMap;
+    }
+
+}
+
+========================== USING MODEL CLASS ===================
+--- The model:
+public class Student {
+    private Long id;
+    private String name;
+    private String email;
+    private LocalDate dob;
+    private Integer age;
+
+... Proceed to generating constructor, getters and setters, as well as toString methods.
+
+
+    // 4 - http://localhost:8080/api/v1/student
+    @GetMapping(path = "api/v1/student")
+    public ArrayList<Student> getStudents(){
+        Student std1 = new Student(1L,"Student 1","student1@emial.com", LocalDate.of(1998,03,13),23);
+        Student std2 = new Student(2L,"Student 2","student2@emial.com", LocalDate.of(2004,07,19),34);
+        Student std3 = new Student(3L,"Student 3","student3@emial.com", LocalDate.of(2011,10,22),18);
+
+        ArrayList<Student> students = new ArrayList<>(List.of(std1, std2, std3));
+        return  students;
+    }
+
+
+
+

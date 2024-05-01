@@ -1,0 +1,6 @@
+======== PROCESS CONTINUES TO RUN AND NOT ABLE TO DELETE =========
+This is typical due to you double clicking the .jar file to start it, it keeps running the in background with no cmd interface, hence not easily able to stop, unlike when it is opened via cmd, which can be stopped by simply closing the cmd
+
+* To fix this:
+- Anywhere in CMD (run as admin): netstat -ano | find "8081"	(Where 8081 is the port used for the project. Change as required)
+- taskkill /F /PID 16972	(Where 16972 is the PID associated with the particular port)

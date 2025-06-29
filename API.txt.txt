@@ -1,6 +1,31 @@
-===== CREATE A CONTROLLER CLASS (ie Student Controller =====
+====== 1. BASIC USAGE ========
+
+@SpringBootApplication
+@RestController                    // Add this annotation
+public class SpringbootDemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootDemoApplication.class, args);
+    }
+
+    // ============= GET REQUEST ================
+    // 1 - http://localhost:8080/
+    @GetMapping("/")
+    public String hello(){
+        return "Hello from this endpoint";
+    }
+
+}
+
+
+
+
+
+===== CREATE A CONTROLLER CLASS (ie Student Controller) =====
 
 // This class will have all the resource for the API
+
+@SpringBootApplication
 @RestController                    // Add this annotation
 public class StudentController {
 

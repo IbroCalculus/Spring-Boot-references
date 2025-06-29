@@ -1,0 +1,8 @@
+IoC - Inversion of Control: 
+Inversion of Control (IoC) is a design principle in software development where the control of creating and managing objects (or dependencies) is inverted from the developer's code to a framework or container.
+In simpler terms:
+Instead of your code controlling the flow (like creating objects, managing dependencies), a framework or container takes over this responsibility.
+
+
+=========== What is a Spring Bean?: ===========
+A Spring Bean is a Java object managed by the Spring framework, handling logic, configurations, or utilities.

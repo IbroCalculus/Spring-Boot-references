@@ -1,0 +1,166 @@
+DEFINITION:
+It is a way of providing the dependencies (objects or components that a class needs to function) to a class from the outside, instead of the class creating those dependencies itself.
+A dependency is an object that another object relies on to do its work.
+
+There are three main ways to inject dependencies:
+- Constructor Injection  					--->		Dependencies are passed as arguments to the constructor.
+- Setter Injection	 					--->		Dependencies are set using setter methods after object creation.
+- Field Injection (used in frameworks like Spring)		--->		Dependencies are injected directly into fields using annotations (e.g., @Autowired in Spring)
+
+----------------- WHEN TO USE EACH ------------------------
+
+1. Constructor Injection
+Use When:
+The dependency is mandatory for the object to function.
+You want to ensure the object is always fully initialized when created.
+You prefer immutability (dependencies can’t change after object creation).
+
+Best For:
+Essential dependencies like a DatabaseConnection in a Repository class.
+
+
+2. Setter Injection
+Use When:
+The dependency is optional or can be changed dynamically.
+You need more flexibility in setting or replacing dependencies after object creation.
+
+Best For:
+Configurable settings like a LoggingService or optional plugins.
+
+
+3. Field Injection
+Use When:
+You’re using a framework like Spring that handles injection for you.
+You want to reduce boilerplate code (no need for setters or constructors).
+
+Best For:
+Quick and simple projects where readability and framework integration are prioritized.
+
+RULE OF THUMB:
+- Use Constructor Injection by default (clean, testable, immutable).
+- Use Setter Injection for optional or configurable dependencies.
+- Use Field Injection only with frameworks like Spring, but be cautious about reduced testability.
+
+
+================= 1. CONSTRUCTOR INJECTION ================
+
+// Dependency Class
+class Engine {
+    public void start() {
+        System.out.println("Engine started...");
+    }
+}
+
+// Dependent Class
+class Car {
+    private Engine engine; // Dependency
+
+    // Constructor for injecting the dependency
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is driving...");
+    }
+}
+
+
+// Main Class
+public class ConstructorInjectionExample {
+    public static void main(String[] args) {
+
+        // Create the dependency
+        Engine engine = new Engine();
+
+        // Inject the dependency into the Car class
+        Car car = new Car(engine);
+
+        // Call methods on the Car class
+        car.drive();
+    }
+}
+
+
+================= 2. SETTER INJECTION ================
+
+// Dependency Class
+class Engine {
+    public void start() {
+        System.out.println("Engine started...");
+    }
+}
+
+// Dependent Class
+class Car {
+    private Engine engine; // Dependency
+
+    // Setter for injecting the dependency
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is driving...");
+    }
+}
+
+
+public class SetterInjectionExample {
+    public static void main(String[] args) {
+
+        // Create the dependency
+        Engine engine = new Engine();
+
+        // Create the dependent class
+        Car car = new Car();
+
+        // Inject the dependency using the setter
+        car.setEngine(engine);
+
+        // Call methods on the Car class
+        car.drive();
+    }
+}
+
+
+
+================= 3. FIELD INJECTION ================
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+// Dependency Class
+@Component
+class Engine {
+    public void start() {
+        System.out.println("Engine started...");
+    }
+}
+
+// Dependent Class
+@Component
+class Car {
+    @Autowired // Field injection
+    private Engine engine; // Dependency
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is driving...");
+    }
+}
+
+// Main Class
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FieldInjectionExample {
+    public static void main(String[] args) {
+        // Start the Spring application
+        SpringApplication.run(FieldInjectionExample.class, args);
+    }
+}
+

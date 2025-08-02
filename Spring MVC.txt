@@ -1,0 +1,49 @@
+NB: The @Controller annotation marks a class as a Spring MVC Controller, meaning it handles HTTP requests. ie; Tells Spring that this class contains web request handling methods.
+It’s a combination of two annotations: 
+	@Component → makes the class a Spring Bean (managed by Spring).
+	@RequestMapping → allows mapping HTTP requests to methods in this class.
+
+========= Spring MVC -> Movel-View-Controller ==========
+It provides a clean way to separate different parts of our applications.
+
+- Model: This is where our application data lives. It represents the business logic and is usually connected to a database or other data sources.
+	 The model can be a simple java class.
+- View:  This is what the user sees (HTML/CSS/JavaScript that is rendered on the browser). Views can be static files or dynamically generated using tools like Thymeleaf (A templating engine).
+- Controller: (A mediator) is like a traffic controller. It handles incoming requests and from the user, interacts with the model to get data, and then tells the view what to display.
+
+
+=============== USAGE ==============
+-1. Controller ( or CHECK: Controller.txt)
+
+================ Create controller (ie HomeController.java) within java directory: ================
+
+@Controller
+public class HomeController {
+    @RequestMapping("/")
+    public String index(){
+        return "index.html";
+    }
+}
+
+
+-2. View
+
+=============== Create folder 'static' within 'resources' directory, with the 'index.html' file ====================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello World, this is Java SpringBoot</h1>
+
+</body>
+</html>
+
+
+============= Execution =============
+Simply run the app. Note that you don't need to do anything within the main.java
+ 
+
+

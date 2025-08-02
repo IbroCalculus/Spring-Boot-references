@@ -1,3 +1,5 @@
+NB: The codes below executes REST APIs returning JSON/XML, instead of views. To return a view, ie index.html. Check Controller.txt
+
 ====== 1. BASIC USAGE ========
 
 @SpringBootApplication
@@ -7,16 +9,67 @@ public class SpringbootDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringbootDemoApplication.class, args);
     }
+------------------------------------------------------------------------------------------------
 
-    // ============= GET REQUEST ================
-    // 1 - http://localhost:8080/
+
     @GetMapping("/")
     public String hello(){
         return "Hello from this endpoint";
     }
+    // Access via: http://localhost:8080/
 
-}
 
+    // GET with path parameter
+    @GetMapping("/hello/{name}/{age}")
+    public String helloWithName(@PathVariable String name, @PathVariable int age) {
+        return "Hello, " + name + " of age " + age + "!";
+    }
+    // Access via: http://localhost:8080/hello/John/30
+
+
+    // GET with request param
+    @GetMapping("/greet")
+    public String greetWithParam(@RequestParam String name, @RequestParam int age) {
+        return "Greetings, " + name + " of age " + age +"!";
+    }
+    // Access via: http://localhost:8080/greet?name=Alice&age=28
+
+
+    // POST endpoint
+    @PostMapping("/post-example")
+    public String postExample(@RequestBody Map<String, String> payload) {
+        return "Received POST request with data: " + payload;
+    }
+    // Send POST request to: http://localhost:8080/post-example
+    // With JSON body like: { "key1": "value1", "key2": "value2" }
+
+    // PUT example
+    @PutMapping("/put-example/{id}")
+    public String putExample(@PathVariable int id, @RequestBody Map<String, String> payload) {
+        return "Updating item with ID " + id + " using data: " + payload;
+    }
+    // Send PUT request to: http://localhost:8080/put-example/123
+    // With JSON body like: { "key": "updatedValue" }
+
+
+    // PATCH example
+    @PatchMapping("/patch-example/{id}")
+    public String patchExample(@PathVariable int id, @RequestBody Map<String, String> updates) {
+        return "Partially updating item with ID " + id + " with data: " + updates;
+    }
+    // Send PATCH request to: http://localhost:8080/patch-example/789
+    // With JSON body like: { "email": "new@example.com" }
+
+
+    // DELETE example
+    @DeleteMapping("/delete-example/{id}")
+    public String deleteExample(@PathVariable int id) {
+        return "Deleting item with ID " + id;
+    }
+    // Send DELETE request to: http://localhost:8080/delete-example/456
+
+
+------------------------------------------------------------------------------------------------
 
 
 

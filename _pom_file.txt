@@ -1,0 +1,3 @@
+POM - Project Object Module:
+	This is the heart of a maven project.
+	It contains configurations and dependencies of the project.

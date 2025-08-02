@@ -1,3 +1,19 @@
+================= WHAT IS SPRINGBOOT? ==============
+Spring Framework:
+It is a java framework for building java applications, with a lot of modules each designed to handle a specific task.
+Modules for: 
+	- Handling dependency injections and managing objects (Core modules)
+	- Building web applications	(Web modules)
+	- Working with databases, SQL or NoSQL, or even in-memory databases. (Data modules)
+	- Handling Aspect Oriented Programming (AOP) like logging, security.
+	- For testing (Test modules)
+
+Downside: A lot of configuration. That's where springboot comes in.
+
+Springboot Framework:
+This is built on top of Spring to simply it.
+
+
 ================ STARTING A NEW PROJECT ==============
 Go to https://start.spring.io/ to create the project's skeleton
 
@@ -17,3 +33,20 @@ Generate and open in InteliJ IDE
 http://localhost:8080  (OR Change the port if not available via Port number.txt)
 NB: This will return a Whitelabel Error Page for now since no API endpoint implemented yet
     CHECK: API.txt
+
+
+=================== AUTOMATIC RESTART =====================
+- Go to mvn repository and search for spring-boot-devtools:
+- Go to: pom.xml
+- Add the dependency: 
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>				// Optional means: this is only for this machine, not to be exported.
+</dependency>
+
+- Intelij: Goto 'Settings' -> 'Build, Execution, Deployment' -> 'Compiler'; Check: Build Project Automatically.
+- Still within 'Settings', -> 'Advanced Settings'; Check: 'Allow auto-make to start even if developed applicaiton is currently running'.
+
+With that, it keeps restarting after some changes within about 2 seconds.

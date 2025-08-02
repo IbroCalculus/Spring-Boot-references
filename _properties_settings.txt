@@ -1,0 +1,32 @@
+Within resource folder, 'application.properties'. Set key value pairs
+
+- server.PORT=8081	- Set port number
+
+
+=========== Accessing values from .properties file for use ============
+
+Assuming within application.properties:
+
+spring.application.name=store
+app.page-size=10
+
+Within a controller class, access these values using the @Value annotation:
+
+
+---- HomeController.java ------
+
+@Controller
+public class HomeController {
+
+    @Value("${app.page-size}")
+    private String pageSize;			// ie: String pageSize = value of app.page-size
+
+    @Value("${spring.application.name}")
+    private String appName;
+
+    @RequestMapping("/home")
+    public String index(){
+        System.out.println("Page size: " + pageSize + ", Application name: " + appName);
+        return "index.html";
+    }
+}

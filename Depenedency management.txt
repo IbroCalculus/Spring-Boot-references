@@ -1,0 +1,18 @@
+To build a web application, we need: web server (ie tomcat), libraries for handling web requests (web), building APIs (webmvc), processing json data (ie jackson), logging (logging).
+In springboot applications, instead of adding multiple individual libraries, we could simply add a starter dependency (ie spring-boot-starter-web) which is a collection of libraries and frameworks
+that have been tested to be used together.
+
+Go to mvn repository website; ie maven central repository (https://central.sonatype.com/) OR MVN Repository (https://mvnrepository.com/)
+
+Search: spring-boot-starter-web
+Select and copy the dependency, ie:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <version>3.5.3</version>
+</dependency>
+
+- Paste in pom.xml and sync.
+
+NB: It is advisable to NOT include <version> of dependendencies, let springboot handle that.

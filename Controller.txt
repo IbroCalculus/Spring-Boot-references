@@ -1,0 +1,37 @@
+Spring controller: 
+
+Start with the basics of spring mvc (Spring MVC.txt).
+
+NB: The @Controller annotation marks a class as a Spring MVC Controller, meaning it handles HTTP requests. ie; Tells Spring that this class contains web request handling methods.
+It’s a combination of two annotations: 
+	@Component → makes the class a Spring Bean (managed by Spring).
+	@RequestMapping → allows mapping HTTP requests to methods in this class.
+
+
+================ Create controller (ie HomeController.java) within java directory: ================
+
+@Controller
+public class HomeController {
+    @RequestMapping("/home")
+    public String index(){
+        return "index.html";
+    }
+}
+
+
+=============== Create folder 'static' within 'resources' directory, with the 'index.html' file ====================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello World, this is Java SpringBoot</h1>
+
+</body>
+</html>
+
+
+============= Execution =============
+Simply run the app. Note that you don't need to do anything within the main.java

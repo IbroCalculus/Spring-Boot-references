@@ -1,4 +1,11 @@
-NB: The codes below executes REST APIs returning JSON/XML, instead of views. To return a view, ie index.html. Check Controller.txt
+NB: The codes below executes REST APIs returning JSON/XML, instead of views. To return a view, ie index.html. Check Controller.txt.
+ If you are building an API, stick with @RestController (As used here). If you are building a web application with views, use @Controller (As used in API.txt).
+
+
+
+
+☝️☝️☝️☝️☝️
+
 
 ====== 1. BASIC USAGE ========
 

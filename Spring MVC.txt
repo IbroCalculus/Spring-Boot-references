@@ -1,3 +1,5 @@
+Spring MVC is a web framework that's part of the Spring Framework, specifically designed for building web applications following the Model-View-Controller architectural pattern. It's one of the most popular web frameworks in the Java ecosystem.
+
 NB: The @Controller annotation marks a class as a Spring MVC Controller, meaning it handles HTTP requests. ie; Tells Spring that this class contains web request handling methods.
 It’s a combination of two annotations: 
 	@Component → makes the class a Spring Bean (managed by Spring).

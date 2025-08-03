@@ -1,3 +1,10 @@
+NB: The codes below executes REST APIs returning views (ie index.html), instead of JSON/XML. To return JSON/XML, Check API.txt
+ If you are building an API, stick with @RestController (As used in API.txt). If you are building a web application with views, use @Controller (As used here).
+
+
+☝️☝️☝️☝️☝️
+
+
 Spring controller: 
 
 Start with the basics of spring mvc (Spring MVC.txt).

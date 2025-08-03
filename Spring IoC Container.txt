@@ -1,0 +1,5 @@
+Spring IoC Container
+
+============ What is IoC (Inversion of Control)? ============
+Inversion of Control (IoC) is a design principle where the control of object creation and management is inverted from the application code to a framework or container. 
+Instead of your code creating and managing dependencies directly, the framework handles this for you

@@ -16,7 +16,8 @@ public class SpringbootDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringbootDemoApplication.class, args);
     }
-------------------------------------------------------------------------------------------------
+
+----------------------- Create Endpoints within Main Project File ---------------------------------------------
 
 
     @GetMapping("/")
@@ -76,10 +77,26 @@ public class SpringbootDemoApplication {
     // Send DELETE request to: http://localhost:8080/delete-example/456
 
 
-------------------------------------------------------------------------------------------------
+----------------------------- Create Endpoints In a Separate File-------------------------------------------------------------------
 
 
+package com.ibsuleiman9.springboot_demo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+public class RestHomeController {
+
+    @GetMapping("/home2")
+    public String hello(){
+        return "This is from Home2";
+    }
+}
+
+Do nothing else withing the main application file. Just run and access via: localhost:8080/home2
+
+
+--- More Examples ---
 
 ===== CREATE A CONTROLLER CLASS (ie Student Controller) =====
 

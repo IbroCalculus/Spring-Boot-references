@@ -1,0 +1,76 @@
+CHECK ALSO: Spring Data JPA.txt
+
+CHECK: Hibernate_and_JPA2.txt on working with Hibernate.
+
+Spring Data JPA (For spring/ spring boot applications) is built on top of Hibernate JPA, which is built on top of JDBC
+
+=========== Hibernate ==============
+Hibernate is an open-source ORM framework for persisting / saving Java objects in a database.
+It is a very popular framework used by a lot of java enterprise projects.
+Hibernate is the most populare implementation of JPA
+
+The structure: Java Class <------- Hibernate --------> Database Table
+
+It uses JDBC in the background for communicating with the database
+
+ie:	       Java Class <------- Hibernate -> JDBC --------> Database Table	
+
+--- Advantages of Hibernate ---
+ - It handles all of the low-level SQL
+ - Minimizes the amount of JDBC code you have to develop
+ - It provides the Object-to-Relational Mapping (ORM)
+
+=========== JPA (Jakarta Persistence API. Previously; Java Persistence API) ===================
+It is a standard API for ORM.
+It is only a specification:
+ - Defines a set of interfaces
+ - Requires an implementation to be usable
+
+
+
+================== Saving a Java Object with JPA ===================
+
+--- Create a Java Object ----------
+Student theStudent = new Student("John", "Doe", "jd@gmail.com");
+
+--- Save the object to database ----------
+entityManager.persist(theStudent);		// entityManager is a special JPA helper object.
+
+
+================== Retrieving a Java Object with JPA ===================
+- Retrive data from database using primary key
+int theId = 1;
+Student myStudent = entityManager.find(Student.class, theId);
+
+================== Querying for Java Object with JPA (Equivalent to SELECT * FROM student) ===================
+TypedQuery<Student> theQuery = entityManager.createQuery("from Student", Student.class);
+List<Student> students = theQuery.getResults();
+
+
+- In Spring Boot, Hibernate is the default implementation of JPA
+- EntityManager is the main component for creating queries etc. (EntityManager is from the JPA)
+- Based on configs, Spring Boot will automatically create the beans for DataSource and EntitManager
+- You can then inject these into your app, for example your DAO
+
+
+
+
+============== Terminologies ================
+- Entity Class: Java class that is mapped to a database table
+  ie Entity Class <---------> ORM (Hibernate) <----------------> Database Table
+
+- DAO (Data Access Object): It Interface or class that manages all database operations for an entity. It is responsible for interfacing with the database.
+  It's a design pattern that provides an abstract interface to access and manipulate data from a database or other persistence mechanism.
+
+
+
+
+CHECK: Hibernate_and_JPA2.txt on working with Hibernate.
+
+
+
+
+
+
+
+

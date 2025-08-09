@@ -1,0 +1,73 @@
+============= What is Springboot Actuator?
+Spring Boot Actuator is a powerful tool in the Spring ecosystem that provides production-ready features to help you monitor and manage your application.
+Spring Boot Actuator exposes endpoints for one to monitor and manage the application.
+
+
+====== Usage ============
+
+--------- 1. Add the dependency: ---------
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+--------- 2. Configure endpoints in application.properties or application.yml: ---------
+# application.properties
+#management.endpoints.web.exposure.include=*					# This exposes all, while the below just the selected. By default, only /health is exposed.
+management.endpoints.web.exposure.include=health,info,metrics
+management.endpoint.health.show-details=always
+management.info.env.enabled=true
+
+NB:
+management.endpoints.web.exposure.exclude=health,info,		# This excludes some endpoints. ie, they cannot be accessed. I think it is best used as; .include=*, .exclue=...
+
+
+
+--------------- NB ---------
+- Actuator automatically exposes endpoints metrics out-of-the-box
+- Endpoints are prefixed with: /actuator
+
+----- Endpoints - Description -----
+1. /actuator/health:	Health informaiton about your application 			(ie localhost:8080/actuator/health)
+2. /actuator/metrics	View JVM metrics, memory usage, HTTP request stats, etc.
+3. /actuator/info	Custom metadata (e.g., app version, description)		# It is {} by default, check below on customizing.
+4. /actuator/env	Inspect environment properties (variables, profiles)
+5. /actuator/beans	View all Spring beans loaded
+6. /actuator/loggers	Change logging levels at runtime
+7. /actuator/mappings	See all available routes/controllers
+8. /actuator/threaddump	Thread dump for debugging
+9. /actuator/heapdump	Heap dump for memory analysis
+
+
+------------- Customization ---------
+info; (Within application.properties file)
+info.app.name=My Springboot Application
+info.app.description=A demo description
+info.app.version=1.0.0
+
+
+
+=========== Spring Boot Actuator Security (Securing endpoints) ==========
+NB: /info is open by default, doesn't require password.
+
+
+--------- 1. Add the dependency: ---------
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+------------------------------------
+
+Trying the access any endpoints will request for username and password. 
+username = user (DEFAULT)
+password = (Within the console, search for 'Using generated security password:', copy the value. ie; a7d6a052-6711-40c1-b51c-203d2c88ff60.
+
+---------- SET CUSTOM USERNAME AND PASSWORD -------------
+Within applications.properties:
+	spring.security.user.name=admin
+	spring.security.user.password=Admin123
+
+
+

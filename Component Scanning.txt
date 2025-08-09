@@ -1,0 +1,26 @@
+Spring will scan your classes for special annotations, ie; @Component, etc.
+After which it will automatically register the beans in the Spring Container.
+
+
+------------- Scanning ----------
+By default, Springs scans every files/folders/subfolders within the same package as the main Spring boot application. Outside the package are not seen by default.
+
+Assume the main application is within this package; 'com.ibsuleiman9.springdemo', while the other one is within 'com.ibsuleiman9.utils'.
+By default, the application cannot scan .utils, to fix;
+
+Within the main application, 
+Modify from:
+	
+	@SpringBootApplication
+	public class SpringbootDemoApplication {...
+
+To:
+
+@SpringBootApplication(
+        scanBasePackages = {
+                "com.ibsuleiman9.springboot_demo",
+                "com.ibsuleiman9.utils"
+        }
+)
+
+public class SpringbootDemoApplication {...

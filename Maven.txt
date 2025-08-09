@@ -1,0 +1,19 @@
+Maven is a Project Management tool.
+Most popular use of Maven is for build management and dependencies.
+
+pom.xml Is the maven file within the project (POM - Project Object Model). It is the configuration file of the project.
+
+------- POM File Structure -------
+- Project meta data: ie Project name, version, outpul file type (JAR, WAR, etc)
+- Dependencies: List of the project's dependencies. ie Spring, Hibernate, etc
+- Plugins:
+
+
+-------- Project Coordinate ----------
+This uniquely identifies a project. It is similar to GPS coordinate for your house: latitude/longitude
+
+	<groupId>com.ibsuleiman9</groupId>
+	<artifactId>springboot_demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+Short of the above is GAV
+

@@ -1,0 +1,42 @@
+CHECK: IoC Container.txt
+CHECK ALSO: Java Configuration.txt
+
+===================== Bean ==================
+This is a regular java object that is managed by Spring
+A Bean is an object that is managed by the Spring IoC (Inversion of Control) container. 
+It's essentially a Java object that Spring creates, configures, and manages throughout its lifecycle.
+
+================= Bean LifeCycle ==============
+The bean lifecycle refers to the series of steps that a Spring-managed bean goes through from creation to destruction. 
+Spring provides hooks to allow developers to add custom logic before initialization, after initialization, and before destruction of the bean.
+
+-------- Lifecycle Overview ---------
+1. Bean Instantiation
+2. Property Injection (Dependency Injection)
+3. Bean Name Awareness (Optional)
+4. Bean Factory Awareness (Optional)
+5. Application Context Awareness (Optional)
+6. Pre-initialization (BeanPostProcessor)
+7. Initialization (@PostConstruct or afterPropertiesSet)
+8. Post-initialization (BeanPostProcessor)
+9. Bean is ready for use
+10. Destruction (@PreDestroy or destroy method)
+
+
+------ Initialization method configuration ----------
+Use the @PostConstruct 
+
+E.g:
+
+@Component
+public class TennisCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "This is a tennis coach";
+    }
+
+    @PostConstruct
+    public void initializeBean(){
+        System.out.println("The bean has been initialized!!!");
+    }
+}

@@ -1,0 +1,4 @@
+============= REDUCE LOGGIN LEVELS ===========
+- Show only warnings and errors;
+in applications.settings:
+	logging.level.root=warn

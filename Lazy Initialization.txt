@@ -1,0 +1,50 @@
+============= What is Lazy Initialization ================
+
+Lazy Initialization is a design pattern/strategy where the creation or initialization of an object (or the execution of some expensive process) is delayed until it is actually needed for the first time.
+
+In contrast: Eager Initialization
+ Eager Initialization (the default behavior in many contexts, including standard Spring bean creation) means an object is created/initialized immediately when the application starts up 
+ or when its containing context is initialized, regardless of whether it's used right away or not.
+
+============= Why Use Lazy Initialization? =============
+ - Faster Application Startup: If your application has many beans, initializing all of them upfront can take time. 
+   Lazy initialization defers the cost of creating certain beans until they are actually required, potentially speeding up the initial startup time.
+
+ - Reduced Memory Consumption: Beans that are never actually used during the application's runtime don't consume memory if they are lazily initialized. 
+   This can be beneficial for large applications or those running in memory-constrained environments.
+
+ - Avoiding Expensive Operations: If a bean's construction or initialization involves time-consuming tasks (e.g., connecting to a database, loading large files, complex calculations), 
+   deferring this until the bean is needed can improve the perceived responsiveness of the application for early user interactions.
+
+================ Potential Drawbacks: =============
+ - Latency on First Use: The first request or operation that requires a lazily initialized bean will experience the cost of its creation and initialization at that moment, 
+   which might cause a slight delay or hiccup for the user.
+ - Hidden Dependencies/Errors: Problems related to the creation of a lazily initialized bean (e.g., misconfiguration, missing dependencies) might not surface until much later in the application's lifecycle, 
+   potentially making debugging harder compared to eager initialization where such issues appear during startup.
+
+
+
+========================= Lazy Initialization setup in Spring Boot ===============================
+Lazy initialization can be applied in 2 ways;
+ -1. Globally: You can configure your entire Spring Boot application to initialize all beans lazily by default. This is typically done using a configuration property.
+ -2. Enabling Lazy Initialization for Specific Beans: You can also apply lazy initialization to individual beans rather than the whole application. This is done using the @Lazy annotation.
+
+
+----------- 1. Globally --------------
+In application.properties file:
+
+ 	spring.main.lazy-initialization=true
+
+
+----------- 2. Specific Beans --------------
+ i. Add @Lazy
+E.g:
+
+@Component
+@Lazy						# This bean will be created only when first requested
+public class CricketCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "This is a cricket coach";
+    }
+}

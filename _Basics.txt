@@ -25,14 +25,65 @@ Project Metadata (Do all as needed, I basically change Group: com.ibsu... & Arti
 Packaging -> Jar
 Java -> 21
 
-Add the spring web dependency
+Add the spring web dependency, and also Springboot DevTools
 
 Generate and open in InteliJ IDE
 
+
+----------------- Optionally within the main java (add @Bean ... CommandLineRunner commandLineRunner...) For initialization operations. ---------
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootCruddemoApplication.class, args);
+	}
+
+    @Bean
+    public CommandLineRunner commandLineRunner(String [] args){
+        return runner -> {
+            System.out.println("Project began execution successfully");
+        };
+    }
+
 =================== STARTING THE SERVER ==================
+----- Execute by the run button in InteliJ IDE ------
+
 http://localhost:8080  (OR Change the port if not available via Port number.txt)
 NB: This will return a Whitelabel Error Page for now since no API endpoint implemented yet
     CHECK: API.txt
+
+----- Building and Execute from CMD -------
+2 options of running from CMD:
+ 1. Use 'java -jar'
+ 2. Use Spring boot Maven plugin: mvnw spring-boot:run
+
+   ----- 1. Java -jar ----
+NB: You can build the .jar file either from the cmd or within inteliJ IDE, after which you execute via; In cmd: java -jar springbootapp.jar OR "C:\Program Files\Java\jdk-21\bin\java.exe" -jar springboot_demo-0.0.1-SNAPSHOT.jar
+
+- In pom.xml, This should exist:
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+---------------- A. IN CMD -------------
+Close IDE
+	- project's root directory > mvnw package
+	This will generated the .jar file (ie springboot_demo-0.0.1-SNAPSHOT.jar)
+Execute via: java -jar springbootapp.jar OR "C:\Program Files\Java\jdk-21\bin\java.exe" -jar springboot_demo-0.0.1-SNAPSHOT.jar
+
+---------------- B. IN InteliJ IDE -------------
+ - View -> Tools Window -> Maven
+ - Double click 'clean' 
+ - Double click 'package'
+
+This will generated the .jar file as above
+
+
+   ----- 2. Spring boot Maven Plugin ----
+project's root directory > mvnw spring-boot:run		# Doesn't require the .jar to be generated first before using this.
+
+	- 
+
+
 
 
 =================== AUTOMATIC RESTART =====================

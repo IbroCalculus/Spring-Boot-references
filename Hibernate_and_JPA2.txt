@@ -1,0 +1,119 @@
+================================= WORKING WITH HIBERNATE   ==========================================
+
+NB: We have a mysql database, 'student_tracker', with table 'student' which has columns 'id', 'first_name', 'last_name', 'email'.
+
+
+------- Add the maven dependencies for mysql-connector-j and spring-boot-starter-data-jpa ------------
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+
+------- applications.properties file ----------------
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3307/student_tracker
+spring.datasource.username=springstudent
+spring.datasource.password=Admin123
+
+
+
+
+========================== Entity Class representing the 'student' table ==========================
+
+@Entity
+@Table(name="student")
+public class Student {
+
+    @Id                                                         // primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)         // auto increment
+    @Column(name="id")
+    private int id;
+
+    @Column(name="first_name")
+    private String firstName;
+
+    @Column(name="last_name")
+    private String lastName;
+
+    @Column(name="email")
+    private String email;
+
+
+// ----------------------- Empty Constructor ------------------
+
+    public Student() {
+    }
+
+// ----------------------- Constructor with arguments ------------------
+
+    public Student(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+// ---------------------- Getters and Setters -----------------
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+// ---------------- toString ---------------
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+}
+
+}
+
+
+
+========================== Student DAO  ==============================
+Student DAO will have the following methods: save(...), findById(), findAll(), findByLastName(), update(), delete(), deleteAll().
+
+DAO needs a JPA Entity Manager. 
+JPA Entity Manager is the main component for saving/retrieving entities.
+

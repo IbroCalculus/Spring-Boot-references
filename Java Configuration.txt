@@ -1,0 +1,69 @@
+In Spring (including Spring Boot), Java-based bean configuration is an alternative to using @Component-style annotations. 
+Instead of annotating your classes with @Component, @Service, etc., you define beans manually in a Java configuration class using the @Configuration and @Bean annotations.
+
+============== PROCEDURE ================
+
+--- 1. Create a Service Interface and Implementations ---
+Eg:
+
+public interface Coach {
+    String getDailyWorkout();
+}
+
+
+public class CricketCoach implements Coach {
+    @Override
+    public String getDailyWorkout() {
+        return "Practice fast bowling for 15 minutes";
+    }
+}
+
+
+public class FootballCoach implements Coach {
+    @Override
+    public String getDailyWorkout() {
+        return "Run 5 laps around the field";
+    }
+}
+
+
+
+--- 2. Create a Java class and annotate as @Configuration: ---
+Eg:
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public Coach cricketCoach() {
+        return new CricketCoach();
+    }
+
+    @Bean
+    public Coach footballCoach() {
+        return new FootBallCoach();
+    }
+
+    @Bean
+    @Primary
+    public Coach tennisCoach() {
+        return new TennisCoach();
+    }
+}
+
+
+
+--- 3. Using the Configuration in Your App (Main Springboot java); import the config class ---
+Eg:
+
+@SpringBootApplication
+@Import(AppConfig.class) // optional if config is in the same package or component-scanned
+public class SpringbootDemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootDemoApplication.class, args);
+    }
+}

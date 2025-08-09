@@ -1,0 +1,33 @@
+====================== WHAT IS BEAN SCOPE ================
+When you define a bean in Spring (e.g., using @Component, @Service, @Repository, @Controller, or declaring it with @Bean in a configuration class), 
+you are essentially telling Spring to create and manage an instance of that class for you. 
+Bean Scope defines how many instances of that bean Spring should create and manage, and how long that instance should live within the Spring container (the Application Context).
+
+It refers to the lifecycle of a bean, such as; How long does the bean live, How many instances are created, and How is the bean shared?
+
+In simpler terms, scope answers two key questions:
+	- How many? (One? Many?)
+	- How long does it live? (For the whole app? Just for one request? For one user session?)
+
+
+======================== TYPES OF SCOPES ==============================
+1. Singleton:		 (The default Scope of a bean is Singleton.)
+
+- Scope Name: singleton
+- What it means: Spring creates exactly one instance of the bean per Spring IoC container (per Application Context). 
+  This same single instance is then shared (injected) wherever that bean is needed throughout the application's lifetime.
+- Lifecycle: The bean instance is created when the Spring container is initialized (unless marked @Lazy). It lives as long as the Spring container exists.
+- When to use: This is the default scope and is suitable for stateless services (like utility services, business logic services that don't hold user-specific data). It's efficient because the same instance is reused.
+
+
+2. Prototype Scope
+
+- Scope Name: prototype
+- What it means: Spring creates a new instance of the bean every time it's requested from the container (e.g., every time it's injected into another bean or retrieved via applicationContext.getBean(...)).
+- Lifecycle: A new bean instance is created upon request. Spring does not manage the complete lifecycle of prototype beans after creation. It doesn't call destroy methods on prototype-scoped beans.
+- When to use: When you need a unique instance each time the bean is requested, perhaps because the bean holds state that shouldn't be shared.
+
+3. Request Scope
+4. Session Scope
+5. Application Scope
+6. Websocket Scope

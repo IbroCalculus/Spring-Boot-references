@@ -1,0 +1,11 @@
+within application.properties file:
+
+-------------- Set port (Also in _properties_settings.txt) -----------------
+- server.PORT=8081	- Set port number
+
+-------------- Configure Application Context path ------------------
+with application.properties file:
+
+ - server.servlet.context-path=/api/vi
+
+Every request should be prefixed by /api/vi

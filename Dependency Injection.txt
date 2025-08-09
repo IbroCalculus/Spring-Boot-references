@@ -1,3 +1,5 @@
+CHECK ALSO: IoC Container.txt
+
 DEFINITION:
 It is a way of providing the dependencies (objects or components that a class needs to function) to a class from the outside, instead of the class creating those dependencies itself.
 A dependency is an object that another object relies on to do its work.
@@ -42,7 +44,70 @@ RULE OF THUMB:
 - Use Field Injection only with frameworks like Spring, but be cautious about reduced testability.
 
 
-================= 1. CONSTRUCTOR INJECTION ================
+================= 1a. CONSTRUCTOR INJECTION (Example 1 using interface) ================
+
+Define an payment service interface (PaymentService.java), which is implemented by Stripe and Paypal payment services. This interface is used in the OrderService
+
+----------- PaymentService.java -----------------
+
+public interface PaymentService {
+    void processPayment(double amount);
+}
+
+
+----------- PaypalPaymentService.java -----------------
+
+public class PaypalPaymentService implements PaymentService{
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("PAYPAL");
+        System.out.println("Amount: " + amount);
+
+    }
+}
+
+----------- StripePaymentService.java -----------------
+
+public class StripePaymentService implements PaymentService {
+    @Override
+    public void processPayment(double amount){
+        System.out.println("STRIPE");
+        System.out.println("Amount: " + amount);
+    }
+}
+
+
+----------- OrderService.java -----------------
+
+public class OrderService {
+
+    PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder(){
+        paymentService.processPayment(10);
+    }
+}
+
+--------- Main.java -------------
+
+public class Main {
+    
+    public static void main(String[] args) {
+        var orderService1 = new OrderService(new StripePaymentService());
+        var orderService2 = new OrderService(new PaypalPaymentService());
+
+        orderService1.placeOrder();
+        System.out.println("==================");
+        orderService2.placeOrder();
+    }
+}
+
+
+================= 1b. CONSTRUCTOR INJECTION (Example 2 using class) ================
 
 // Dependency Class
 class Engine {
@@ -83,7 +148,72 @@ public class ConstructorInjectionExample {
 }
 
 
-================= 2. SETTER INJECTION ================
+
+================= 2. SETTER INJECTION (Example 1 using interface) ================
+
+Same example as Example 1 above.
+Define an payment service interface (PaymentService.java), which is implemented by StripePaymentService.java and PaypalPaymentService.java. This interface is used in the OrderService.java
+
+
+----------- PaymentService.java -----------------
+
+public interface PaymentService {
+    void processPayment(double amount);
+}
+
+
+----------- PaypalPaymentService.java -----------------
+
+public class PaypalPaymentService implements PaymentService{
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("PAYPAL");
+        System.out.println("Amount: " + amount);
+
+    }
+}
+
+----------- StripePaymentService.java -----------------
+
+public class StripePaymentService implements PaymentService {
+    @Override
+    public void processPayment(double amount){
+        System.out.println("STRIPE");
+        System.out.println("Amount: " + amount);
+    }
+}
+
+
+----------- OrderService.java -----------------
+
+
+public class OrderService {
+
+    PaymentService paymentService;
+
+    public void setPaymentService(PaymentService paymentService) {		// THE SETTER
+        this.paymentService = paymentService;
+    }
+
+    public void placeOrder(){
+        paymentService.processPayment(10);
+    }
+}
+
+
+--------- Main.java -------------
+
+public class Main {
+    public static void main(String[] args) {
+
+        var orderService3 = new OrderService();
+        orderService3.setPaymentService(new StripePaymentService());
+        orderService3.placeOrder();
+    }
+}
+
+
+================= 2b. SETTER INJECTION (Example 2 using class) ================
 
 // Dependency Class
 class Engine {

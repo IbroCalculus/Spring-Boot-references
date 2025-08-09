@@ -2,3 +2,9 @@
 - Search any ASCII text generator (ie www.patorjk.com)
 - Create your text (I used the Font 'ANSI Shadow', 'Calvin S', '3D-ASCII. good)
 - Within springboot project; src -> resources: Create a file banner.txt and paste the ascii text into it.
+
+
+
+======== TO TURN OFF BANNER ===========
+In applications.properties file:
+spring.main.banner-mode=off

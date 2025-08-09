@@ -1,0 +1,150 @@
+CHECK: IoC Container.txt
+
+==================== IoC (Inversion of Control) ==========================
+Inversion of Control (IoC) is a design principle where the control of object creation and management is inverted from the application code to a framework or container. 
+Instead of your code creating and managing dependencies, the framework handles it for you.
+
+==================== What is an IoC Container? ==========================
+An IoC Container is a framework that implements IoC by managing:
+	- Object creation (instantiation)
+	- Dependency injection
+	- Object lifecycle management
+	- Configuration management
+
+
+==================== Spring Boot's IoC Container ==========================
+Spring Boot uses Spring Framework's IoC container, which is primarily implemented through:
+ - 1. ApplicationContext
+ - 2. BeanFactory
+
+The primary functions of Spring Container are to:
+ - Create and manage Objects (Inversion of Control)
+ - Inject Object Dependencies (Depency Injection)
+
+===================== Bean ==================
+This is a regular java object that is managed by Spring
+A Bean is an object that is managed by the Spring IoC (Inversion of Control) container. 
+It's essentially a Java object that Spring creates, configures, and manages throughout its lifecycle.
+
+
+
+===================== Configuring Spring Container ===============
+3 methods:
+ 1. XML Configuration (Legacy)
+ 2. Java Annotations (Modern)
+ 3. Java Source Code (Modern)
+
+The spring container functions as the Factory Object
+
+------------------- Spring boot Dependency Injection -------------------------------------------
+
+@Component
+Using dependency inject, e.g A is the interface, B1, B2, B3, ... are implementing A, each of the Bs class with the @Component annotation is marked a Spring Bean, which makes them candidate for dependency injection during IoC.
+
+@Autowired
+Purpose: Dependency Injection. It tells Spring to automatically inject a dependency (another bean managed by Spring) into a field, constructor, or setter method of a bean.
+NB: If there is only one constructor, then @Autowired is Optional.
+
+
+================================== EXAMPLE =============================
+- Interface:
+
+public interface Coach {
+    String getDailyWorkout();
+}
+
+
+- 3 Bean Classes Implementing the Interface:
+
+@Component
+public class CricketCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "Practice fast bowling for 15 minutes";
+    }
+}
+
+@Component
+public class FootBallCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "This is a football coach";
+    }
+}
+
+@Component
+public class TennisCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "This is a tennis coach";
+    }
+}
+
+
+- Usage in Constructor Dependency 
+
+@RestController
+public class DemoController {
+
+    private final Coach coach;
+
+    @Autowired
+    public DemoController(Coach coach) {
+        this.coach = coach;
+    }
+
+    @GetMapping("/dailyworkout")
+    public String getDailyWorkout(){
+        return coach.getDailyWorkout();
+    }
+}
+
+
+NB:
+---- Accessing the endpoint; localhost:8080/delayworkout, ALTHOUGH THIS WILL GENERATE AN ERROR EVEN WHILE STARTIN THE SPRING BOOT PROJECT.
+This is because we now have more than 1 @Component. Spring will find all three during component scanning and create a bean for each. 
+So, your Spring Application Context will contain one CricketCoach bean, one FootballCoach bean, and one TennisCoach bean. Doesn't know which to use.
+
+Several ways to fix:
+
+--- Approach 1: Using @Primary (Default Choice) ------
+
+You can designate one implementation as the primary choice. If there's ambiguity, Spring will inject the one marked @Primary.
+E.g:
+@Component
+@Primary 						// <--- Mark this as the primary Coach implementation
+public class CricketCoach implements Coach{
+    @Override
+    public String getDailyWorkout() {
+        return "Practice fast bowling for 15 minutes";
+    }
+}
+
+
+--- Approach 2: Using @Qualifier (Specific Choice) ------
+
+You can explicitly tell Spring which specific bean you want to inject using the @Qualifier annotation. 
+The qualifier name typically defaults to the component name (the class name with the first letter in lowercase, unless specified otherwise in @Component).
+ie;
+
+@RestController
+public class DemoController {
+    private final Coach coach;
+
+    // Use @Qualifier to specify which Coach implementation to inject
+    @Autowired
+    public DemoController(@Qualifier("footballCoach") Coach coach) { // <--- Inject FootballCoach
+        this.coach = coach;
+    }
+
+    @GetMapping("/dailyworkout")
+    public String getDailyWorkout(){
+        return coach.getDailyWorkout();
+    }
+}
+
+--- Approach 3: Custom Names with @Component ------
+
+
+--- Approach 4: Multiple Endpoints (Different Coaches in One Controller) ------
+

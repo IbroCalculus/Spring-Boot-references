@@ -59,13 +59,13 @@ List<Student> students = theQuery.getResults();
 - Entity Class: Java class that is mapped to a database table
   ie Entity Class <---------> ORM (Hibernate) <----------------> Database Table
 
-- DAO (Data Access Object): It Interface or class that manages all database operations for an entity. It is responsible for interfacing with the database.
+- DAO (Data Access Object): An Interface or class that manages all database operations for an entity. It is responsible for interfacing with the database.
   It's a design pattern that provides an abstract interface to access and manipulate data from a database or other persistence mechanism.
 
 
 
 
-CHECK: Hibernate_and_JPA2.txt on working with Hibernate.
+CHECK: Hibernate_and_JPA2.txt on working with Hibernate in spring boot (Using spring-boot-starter-data-jpa)
 
 
 

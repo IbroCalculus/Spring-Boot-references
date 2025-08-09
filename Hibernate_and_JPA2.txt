@@ -1,4 +1,7 @@
-================================= WORKING WITH HIBERNATE   ==========================================
+NB: - In Springboot, Hibernate is the default implementation of JPA
+    - EntityManager is the default main component for creating queries, etc. (EntityManager is from JPA)
+
+================================= WORKING WITH HIBERNATE IN SPRING BOOT (Using spring-boot-starter-data-jpa)  ==========================================
 
 NB: We have a mysql database, 'student_tracker', with table 'student' which has columns 'id', 'first_name', 'last_name', 'email'.
 
@@ -25,8 +28,29 @@ spring.datasource.password=Admin123
 
 
 
+========================== Main App ============================
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootCruddemoApplication.class, args);
+	}
+
+
+    @Bean
+    public CommandLineRunner commandLineRunner(String [] args){
+        return runner -> {
+            System.out.println("\n\t--------> Project began execution successfully");
+        };
+    }
+
+
 
 ========================== Entity Class representing the 'student' table ==========================
+
+// define the fields
+// define empty constructor
+// define parameterised constructor
+// generate getters and setters
+// generate toString
 
 @Entity
 @Table(name="student")
@@ -52,7 +76,7 @@ public class Student {
     public Student() {
     }
 
-// ----------------------- Constructor with arguments ------------------
+// ----------------------- Constructor with arguments (Excluding autoincrement primary key) ------------------
 
     public Student(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -111,9 +135,151 @@ public class Student {
 
 
 
-========================== Student DAO  ==============================
+========================== Student DAO (Data Access Object)  ==============================
+
+The DAO is responsible for interfacing with the database. DAO is a very commong design pattern.
+It is like a helper class for communicating with the database.
+
+structure: application <--------> DAO <-------------> Database
+
 Student DAO will have the following methods: save(...), findById(), findAll(), findByLastName(), update(), delete(), deleteAll().
 
 DAO needs a JPA Entity Manager. 
 JPA Entity Manager is the main component for saving/retrieving entities.
+
+structure: DAO <-------> JPA Entity Manager <----------> Other supporting components <----------> Database.
+
+-------------- JPA Entity Manager ------------
+Supporting components to the JPA Entity Manager:
+ - Data source: The data source defines the database connection information.
+   The JPA Entity Manager and Data source are automatically created by Spring Boot based on the application.properties file data. (ie JDBC URL, password, etc).
+
+
+--------- Create the DAO (ie StudentDAO) ----------------
+
+public interface StudentDAO {
+    void save(Student theStudent);
+    Student findById(int id);
+    List<Student> findAll();
+    void deleteById(int id);
+    void update(Student theStudent);
+    int deleteAll();
+}
+
+
+
+--------- Create the DAO Implementation (ie StudentDAOImpl) ----------------
+
+@Repository
+public class StudentDAOImpl implements StudentDAO{
+
+//    1. Define field for entity manager
+    private EntityManager entityManager;
+
+//    2. Inject entity manager using constructor injection
+    @Autowired
+    public StudentDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    //    Implement save method and other methods
+    @Override
+    @Transactional                              // From org.springframework.transaction.annotation.Transactional
+    public void save(Student theStudent) {
+        entityManager.persist(theStudent);
+    }
+
+    @Override
+    public Student findById(int id) {
+        return entityManager.find(Student.class, id);
+    }
+
+    @Override
+    public List<Student> findAll() {
+        return entityManager.createQuery("FROM Student", Student.class).getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(int id) {
+        Student student = entityManager.find(Student.class, id);
+        if (student != null) {
+            entityManager.remove(student);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+
+    @Override
+    @Transactional
+    public int deleteAll() {
+        return entityManager.createQuery("DELETE FROM Student").executeUpdate();
+    }
+}
+
+
+
+--------- Use in Main App ----------------
+
+    @Bean
+    public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
+        return runner -> {
+            System.out.println("\n\t--------> Project began execution successfully");
+//            createStudent(studentDAO);
+//            getStudentById(studentDAO);
+            getAllStudents(studentDAO);
+//            updateStudent(studentDAO);
+        };
+    }
+
+
+
+
+    void createStudent(StudentDAO studentDAO){
+        System.out.println("Creating new student object ...");
+        var student = new Student("John", "Doe", "jdoe@email.com");
+        studentDAO.save(student);
+        System.out.println("Saved student. Generated id: " + student.getId());
+    }
+
+    void getStudentById(StudentDAO studentDAO){
+        System.out.println("Reading student object ...");
+        var student = studentDAO.findById(1);
+        System.out.println("Student: " + student);
+    }
+
+    void getAllStudents(StudentDAO studentDAO){
+        System.out.println("Reading all students object ...");
+        var students = studentDAO.findAll();
+//        System.out.println("Students: " + students);
+        for (Student student : students){
+            System.out.println(student);
+        }
+        System.out.println("Number of students are: " +students.size());
+    }
+
+    void deleteStudentById(StudentDAO studentDAO){
+        System.out.println("Deleting student object ...");
+        studentDAO.deleteById(1);
+        System.out.println("Deleted student id: 1");
+    }
+
+    void updateStudent(StudentDAO studentDAO){
+        System.out.println("Updating student object ...");
+        var student = studentDAO.findById(1);
+        student.setFirstName("Jane");
+        studentDAO.update(student);
+        System.out.println("Updated student: " + student);
+    }
+
+    void deleteAllStudents(StudentDAO studentDAO){
+        System.out.println("Deleting all students object ...");
+        var numberOfDeletedStudents = studentDAO.deleteAll();
+        System.out.println("Deleted students: " + numberOfDeletedStudents);
+    }
+
 

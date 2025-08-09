@@ -160,10 +160,12 @@ Supporting components to the JPA Entity Manager:
 public interface StudentDAO {
     void save(Student theStudent);
     Student findById(int id);
-    List<Student> findAll();
+    List<Student> findAll();        		// SELECT * FROM student
+    List<Object[]> findAll2();      		// SELECT firstName, email FROM student
     void deleteById(int id);
     void update(Student theStudent);
     int deleteAll();
+
 }
 
 
@@ -194,9 +196,19 @@ public class StudentDAOImpl implements StudentDAO{
         return entityManager.find(Student.class, id);
     }
 
+    
     @Override
     public List<Student> findAll() {
         return entityManager.createQuery("FROM Student", Student.class).getResultList();
+//        return entityManager.createQuery("FROM Student s WHERE s.id > 2", Student.class).getResultList();
+
+    }
+
+    @Override
+    public List<Object[]> findAll2() {
+        return entityManager
+                .createQuery("SELECT s.firstName, s.email FROM Student s WHERE s.id > 2", Object[].class)
+                .getResultList();
     }
 
     @Override
@@ -231,7 +243,8 @@ public class StudentDAOImpl implements StudentDAO{
             System.out.println("\n\t--------> Project began execution successfully");
 //            createStudent(studentDAO);
 //            getStudentById(studentDAO);
-            getAllStudents(studentDAO);
+//            getAllStudents(studentDAO);
+            getAllStudents2(studentDAO);
 //            updateStudent(studentDAO);
         };
     }
@@ -262,6 +275,15 @@ public class StudentDAOImpl implements StudentDAO{
         System.out.println("Number of students are: " +students.size());
     }
 
+    void getAllStudents2(StudentDAO studentDAO){
+        System.out.println("Reading all students object ...");
+        var students = studentDAO.findAll2();
+        for (Object[] student : students){
+            System.out.println(Arrays.toString(student));
+        }
+        System.out.println("Number of students are: " +students.size());
+    }
+
     void deleteStudentById(StudentDAO studentDAO){
         System.out.println("Deleting student object ...");
         studentDAO.deleteById(1);
@@ -281,5 +303,10 @@ public class StudentDAOImpl implements StudentDAO{
         var numberOfDeletedStudents = studentDAO.deleteAll();
         System.out.println("Deleted students: " + numberOfDeletedStudents);
     }
+J
 
 
+-------------------------- JPA Query Language ---------------------
+- It is a query language for retrieving objects. Similar to SQL; where, like, order by, join, etc
+- JPQL is based on entity name and entity fields.
+- It is used above, within the StudentDAOImpl, when we did entityManager.createQuery...

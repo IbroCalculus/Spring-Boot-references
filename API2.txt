@@ -1,0 +1,12 @@
+============== HTTP Request Message ==============
+The HTTP Request message has 3 main parts:
+- Request line: The HTTP command (ie GET, POST, etc)
+- Header variables: Request metadata
+- Message body: Contents of the message or payload.
+
+
+=============== HTTP Response Message ==============
+The HTTP Response message has 3 main parts as well:
+- Response line: The server protocol and status code (ie 200, 404, etc)
+- Header variables: Response metadata
+- Message body: contents of the message

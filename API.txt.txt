@@ -1,7 +1,9 @@
 NB: The codes below executes REST APIs returning JSON/XML, instead of views. To return a view, ie index.html. Check Controller.txt.
- If you are building an API, stick with @RestController (As used here). If you are building a web application with views, use @Controller (As used in API.txt).
+ If you are building an API, stick with @RestController (As used here). If you are building a web application with views, use @Controller (As used in Controller.txt).
 
 
+NB: You can globally set all endpoints within each file in the project to be prefixed by '/api/vi' using: spring.mvc.servlet.path=/api/v1 within application.properties file.
+Optionally, use the @RequestMapping("/api/v1") as shown below.
 
 
 ☝️☝️☝️☝️☝️
@@ -11,6 +13,7 @@ NB: The codes below executes REST APIs returning JSON/XML, instead of views. To 
 
 @SpringBootApplication
 @RestController                    // Add this annotation
+@RequestMapping("/api/v1")	   // Add this if want all endpoints here to begin with 'api/vi/'.
 public class SpringbootDemoApplication {
 
     public static void main(String[] args) {

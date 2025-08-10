@@ -1,0 +1,14 @@
+Data binding is the process of converting a JSON data to a Java POJO, vice versa.
+It's also referred to as Serializaton/Deserialization.
+
+- Serialization (Java Object → JSON)
+    The Java object is converted into a JSON string.
+- Deserialization (JSON → Java Object)
+    The JSON data is read and automatically mapped into an instance of a Java class.
+
+------------ JSON Data Binding with Jackson ------------
+Spring uses the Jackson Project behind the scenes. Spring Boot Starter Web automatically includes dependency for Jackson.
+
+
+================== WORKING WITH JACKSON IN CREATING API =======================
+
